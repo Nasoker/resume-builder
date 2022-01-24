@@ -13,15 +13,28 @@ const submitButton = document.querySelector('.info-button');
 const headerInfo = document.querySelector('.header-info');
 
 addBlockButton.addEventListener('click', ()=>{
-    modalWindowOn(windowAddBlock);
-    closeChecking(windowAddBlock);
     const confirmButton = windowAddBlock.querySelector('.modal-confirm');
     const title = windowAddBlock.querySelector('.modal-title');
-    confirmButton.addEventListener('click', (e) => {
-        addBlock(title.value);
+    const cancelButton = windowAddBlock.querySelector('.modal-cancel');
+
+    cancelButton.addEventListener('click', ()=>{
         modalWindowOff(windowAddBlock);
         title.value = '';
+        confirmButton.removeEventListener('click',confirmListener);
     });
+    
+
+    function confirmListener(){
+        addBlock(title.value);
+        modalWindowOff(windowAddBlock,confirmButton);
+        title.value = '';
+        confirmButton.removeEventListener('click',confirmListener)
+    }
+
+    modalWindowOn(windowAddBlock);
+
+    confirmButton.addEventListener('click', confirmListener);
+
 });
 
 submitButton.addEventListener('click', ()=>{
@@ -39,7 +52,13 @@ loader.addEventListener('change', function(e) {
       reader.readAsDataURL(file);
 });
 
-function modalWindowOff(modalWindow) {
+function listener(title,window,button){
+    addBlock(title.value);
+    modalWindowOff(window,button);
+    title.value = '';
+}
+
+function modalWindowOff(modalWindow,button) {
     modalWindow.classList.add('hidden');
     body.classList.remove('stop-scrolling');
 }
@@ -49,10 +68,6 @@ function modalWindowOn(modalWindow) {
     body.classList.add('stop-scrolling');
 }
 
-function closeChecking(modalWindow){
-    const cancelButton = modalWindow.querySelector('.modal-cancel');
-    cancelButton.addEventListener('click', ()=>{modalWindowOff(modalWindow)});
-}
 
 function createElement(elementName,elementClasses){
     const element = document.createElement(elementName);
@@ -66,32 +81,46 @@ function createElement(elementName,elementClasses){
 function addBlock(text){
     const parent = createElement('div',['info-block']);
     const title = createElement('div',['info-block-title']);
-    title.innerText = text;
-    const button = addButton(); 
+    const button = addButton();
+    const headerInfo = createElement('div',['info-header']);
 
-    parent.append(title,button);
+    title.innerText = text;
+
+    headerInfo.append(title,button);
+    parent.append(headerInfo);
     mainInfo.append(parent);
-    debugger
 }
 
 function addButton(){
     const button = createElement('button',['add-info']);
-    button.innerText = 'Add';
+    button.innerText = '+';
     button.addEventListener('click', ()=>{
-        modalWindowOn(windowAddDescr);
-        closeChecking(windowAddDescr);
-
         const confirmButton = windowAddDescr.querySelector('.modal-confirm');
         const title = windowAddDescr.querySelector('.modal-title');
         const description = windowAddDescr.querySelector('.modal-description');
-        const buttonParent = button.parentElement;
+        const cancelButton = windowAddDescr.querySelector('.modal-cancel');
+        const header = button.parentElement;
+        const headerParent = header.parentElement;
 
-        confirmButton.addEventListener('click', () => {
-            addChild(title.value,description.value,buttonParent);
+        cancelButton.addEventListener('click', ()=>{
             modalWindowOff(windowAddDescr);
+            confirmButton.removeEventListener('click', listener);
             title.value = '';
             description.value = '';
         });
+
+        confirmButton.addEventListener('click', listener);
+
+        function listener(){
+            addChild(title.value,description.value,headerParent);
+            modalWindowOff(windowAddDescr);
+            title.value = '';
+            description.value = '';
+            confirmButton.removeEventListener('click', listener);
+        }
+
+        modalWindowOn(windowAddDescr);
+
     })
     return button;
 }

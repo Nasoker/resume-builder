@@ -1,64 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./styles/style.css" rel="stylesheet">
-    <title>Resume Builder</title>
-</head>
-<body>
-    <div class="header">
-        <img src="./assets/avatar.png" alt="image" class="resume-photo">
-        <input type="file" placeholder='Load' class='file-loader'>
-        <div class="header-info">
-            <input type="text" class="info-name" placeholder="Full name">
-            <input type="date" class="info-birthday">
-            <input type="phone" class="info-phone" placeholder="Phone">
-            <input type="email" class="info-email" placeholder="email">
-            <input type="button" class='info-button' value="Submit">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="./styles/style.css" rel="stylesheet">
+        <title>Resume Builder</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="header-photo">
+                    <img src="./assets/avatar.png" alt="image" class="resume-photo">
+                    <label for="load" class="fake-loader">
+                        Load Avatar
+                        <input
+                            type="file"
+                            placeholder="Load"
+                            name="load"
+                            class="file-loader"
+                        >
+                    </label>
+                    <button class="add-block">Add Block</button>
+                </div>
+                <div class="header-info">
+                    <input type="text" class="info-name" placeholder="Full Name">
+                    <input type="date" class="info-birthday">
+                    <input type="phone" class="info-phone" placeholder="Phone">
+                    <input type="email" class="info-email" placeholder="Email">
+                    <input type="button" class="info-button" value="Submit">
+                </div>
+            </div>
+            <div class="main">
+                <div class="main-info"></div>
+            </div>
         </div>
-    </div>
-        <div class="main">
-            <button class="add-block">Add Block</button>
-            <div class="main-info"></div>
+    </body>
+    <section class="modal hidden">
+        <div class="overlay"></div>
+        <div class="modal-content">
+            <p class="modal-descr">You can add name for title and description</p>
+            <label class="modal-lable" for="title">Title</label>
+            <input
+                class="modal-title"
+                type="text"
+                name="title"
+                placeholder="Title"
+            >
+            <label class="modal-lable" for="descr">Description</label>
+            <input class="modal-description" type="text" placeholder="descr">
+            <div class="modal-buttons-row">
+                <button class="modal-cancel">
+                    Cancel
+                </button>
+                <button class="modal-confirm">
+                    Confirm
+                </button>
+            </div>
         </div>
-        
-</body>
-<section class="modal hidden">
-    <div class="overlay"></div>
-    <div class="modal-content">
-        <p class="modal-descr">You can add name for title and description</p>
-        <label class="modal-lable" for="title">Title</label>
-        <input class="modal-title" type="text" name="title" placeholder="Title">
-        <label class="modal-lable" for="descr">Description</label>
-        <input class="modal-description" type="text" placeholder="descr">
-        <div class="modal-buttons-row">
-            <button class="modal-cancel">
-                Cancel
-            </button>
-            <button class="modal-confirm">
-                Confirm
-            </button>
+    </section>
+    <section class="modal-add hidden">
+        <div class="overlay"></div>
+        <div class="modal-content">
+            <p class="modal-descr">You can add name for title</p>
+            <label class="modal-lable" for="title">Title</label>
+            <input
+                class="modal-title"
+                type="text"
+                name="title"
+                placeholder="Title"
+            >
+            <div class="modal-buttons-row">
+                <button class="modal-cancel">
+                    Cancel
+                </button>
+                <button class="modal-confirm">
+                    Confirm
+                </button>
+            </div>
         </div>
-    </div>
-</section>
-
-<section class="modal-add hidden">
-    <div class="overlay"></div>
-    <div class="modal-content">
-        <p class="modal-descr">You can add name for title</p>
-        <label class="modal-lable" for="title">Title</label>
-        <input class="modal-title" type="text" name="title" placeholder="Title">
-        <div class="modal-buttons-row">
-            <button class="modal-cancel">
-                Cancel
-            </button>
-            <button class="modal-confirm">
-                Confirm
-            </button>
-        </div>
-    </div>
-</section>
-<script src="./js/main.js"></script>
+    </section>
+    <script src="./js/main.js"></script>
 </html>
